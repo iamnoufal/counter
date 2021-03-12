@@ -123,6 +123,9 @@ table {background-color: white;margin: 3vw; padding:3vw;width:50%;display:inline
       prevtime.innerHTML = Date();
       prevcount.innerHTML = counted;
       localStorage.setItem("countno",counted);
+      if (counted>=100) {
+        body.style.backgroundColor="lightgrey";
+      }
     }
 
     function clickfunc1() {
