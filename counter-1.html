@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>COUNTER</title>
+<meta name='viewport' conten='width=device-width, initial-scale=1.0'>
+<style>
+body {background-color:lightblue;color:brown;font-size:3vw;text-align:center;margin:0;padding:0;font-family:sans-serif}
+button {height:50vw;width:50vw;font-size:8vw;border-radius:66vw;margin:3vw 25vw}
+header {text-align:center;font-size:5vw;margin-top:15vw;border-bottom: 3px solid brown}
+p {margin: 8vw; text-align:justify}
+table {background-color: white;margin: 3vw; padding:3vw;width:50%;display:inline-block;border-radius: 2vw;}
+#reset {background-color:rgb(239,239,239);width:100%;font-size:8vw;padding:5vw 0;margin:0;color:brown;text-align: center;position: fixed; bottom:0; border-radius: 10vw 10vw 0 0}
+</style>
+</head>
+<body>
+  <div id='home' style="display: block;">
+    <a onclick="infofunc()">
+      <p style='position:fixed;right:3vw;top:3vw;margin:0;font-family:monospace;font-size: 7vw;border:3px solid brown;padding:0 2.5vw 1vw 2.5vw;border-radius:10vw;'>i</p>
+    </a>
+    <header style='font-size: 10vw;margin: 8vw;border-bottom: none;'>COUNTER</header>
+    <button id='new'  onclick='startfunc()' style="display: block;font-size:10vw">Start<br>New</button>
+    <button id='prev'  onclick='prevfunc()' style="display: block;">Resume<br>previous<br>count</button>
+    <button id='countno'  onclick='clickfunc()' style="display: none"></button>
+    <button id='countno1'  onclick='clickfunc1()' style="display: none"></button>
+    <div onclick='resetfunc()' id='reset' style="display: none;">Reset</div>
+  </div>
+  <div id="resume" style="display: none">
+    <header>Previous count</header>
+    <table onclick='resumefunc()' id='prevtable'>
+      <tr><td>Time:</td><td id='prevtime'></td></tr>
+      <tr><td>Count:</td><td id="prevcount"></td></tr>
+    </table>
+  </div>
+  <div id='info' style='display:none'>
+    <a onclick="homefunc()">
+      <p style='position:fixed;right:3vw;top:3vw;margin:0;font-family:monospace;font-size: 7vw;border:3px solid brown;padding:0 2.5vw 1vw 2.5vw;border-radius:10vw;'>x</p>
+    </a>
+    <header>What's new?</header>
+    <p>
+      1. Added an <b>Info</b> section which you're currently viewing. Here you can 
+      find details about this program.
+      <br>
+      2. Modified the <b>Reset</b> button and slight changes to font.
+    </p>
+    <header>Upcoming developments</header>
+    <p>
+      Looking for a way to save the counts individually so that 
+      you could access them later.
+      <br>
+      You'll get them soon....
+    </p>
+    <header>From the developer</header>
+    <p>
+      Hey there, I'm Noufal Rahman. This program will be used in many ways.
+      If you're a developer, you can run your iterations if you have many datasets, 
+      as you may find it difficult to keep track of larger counts. Else, it'll 
+      be used to keep track of count while resiting prayers. Else I hope you'll 
+      find your own way.
+    </p>
+    <p>
+      If you're facing any problems or you have any suggestions on improving the 
+      program, feel free to convey me at <a href="mailto:jnrahman12@gmail.com">jnrahman12@gmail.com</a>
+    </p>
+  </div>
+  <script>
+    var home = document.getElementById('home');
+    var info = document.getElementById('info');
+    var resume = document.getElementById("resume");
+    var countno = document.getElementById("countno");
+    var countno1 = document.getElementById("countno1");
+    var start =  document.getElementById("new");
+    var prev = document.getElementById("prev");
+    var body = document.getElementById('body');
+    var prevtime = document.getElementById('prevtime');
+    var prevcount = document.getElementById("prevcount");
+    var reset = document.getElementById("reset");
+    var count = 0;
+    var count0 = localStorage.getItem("countno")*1;
+    var count1 = localStorage.getItem("countno1")*1;
+    prevtime.innerHTML = Date();
+    prevcount.innerHTML = count0;
+    if (count0==0) {document.getElementById("prevtable").style.display='none';}
+
+    function infofunc() {
+      home.style.display='none';
+      info.style.display='block';
+    }
+
+    function homefunc() {
+      home.style.display='block';
+      info.style.display='none';
+    }
+  
+    function startfunc() { 
+      start.style.display="none";
+      prev.style.display="none";
+      countno.style.display='block';
+      reset.style.display = "block";
+      countno.innerHTML="Number of counts <br>"+ count;
+    }
+    
+    function prevfunc() {
+      if (localStorage.getItem("savecount1")==0 || localStorage.getItem("countno")==null) {
+        alert("You don't have any previous counts")
+      } else {
+        home.style.display='none';
+        resume.style.display='block';
+      }
+    }
+
+    function resumefunc() {
+      home.style.display='block';
+      start.style.display="none";
+      prev.style.display="none";
+      resume.style.display='none';
+      countno1.style.display='block';
+      reset.style.display = "block";
+      countno1.innerHTML = "Number of counts <br>" + count0;
+    }
+
+    function clickfunc() {
+      var counted = count+=1;
+      countno.innerHTML = "Number of counts <br>" + counted;
+      prevtime.innerHTML = Date();
+      prevcount.innerHTML = counted;
+      localStorage.setItem("countno",counted);
+    }
+
+    function clickfunc1() {
+      var counted = count0+=1;
+      countno1.innerHTML = "Number of counts <br>" + counted;
+      prevtime.innerHTML = Date();
+      prevcount.innerHTML = counted;
+      localStorage.setItem("countno",counted);
+    }
+    
+    function resetfunc() {
+      if (confirm("Are you sure you want to reset? This will delete all your count")) {
+        localStorage.setItem("countno",0);
+        location.reload()
+      }
+    }
+  </script>
+</body>
+</html>
